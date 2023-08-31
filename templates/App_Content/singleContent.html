@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}{{title}}{% endblock title_block %}
+
+{% block body_block %}
+{% load crispy_forms_tags %}
+<h2>Single Content</h2>
+<div class="row">
+    <div class="col-9">
+        <iframe width="900px" height="500px" src="https://www.youtube.com/embed/{{info.slug}}"
+            title="YouTube video player"></iframe>
+        <p> {{info.user_content.count}} Comments</p>
+        {% for comment in info.user_content.all %}
+        <p> {{comment.user.first_name}} {{comment.user.last_name}} <small>{{comment.created_at}}</small>
+            <br> {{comment}}
+        </p>
+        {% endfor %}
+
+    </div>
+    <div class="col-3 m-0 p-0">
+        <h3>{{info.video_title}}</h3>
+        <h6 class="m-0 p-0">creator name: {{info.user.first_name}} {{info.user.last_name}}</h6>
+        <p class=" p-0">{{info.created_at}}</p>
+        {% if user.is_authenticated %}
+        {% if already_commented %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            You Had <strong>Already Command this Content</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <form action="#" method="POST">
+            {{form | crispy}}
+
+            <input type="submit" value="Comment" class="btn btn-primary">
+            {% csrf_token %}
+        </form>
+        {% else %}
+
+        <h6>If you want to comment this Content, <a href="{% url "login" %}">Login First</a> </h6>
+
+        {% endif %}
+    </div>
+</div>
+
+{% endblock body_block %}

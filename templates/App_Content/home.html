@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title_block %}{{title}}{% endblock title_block %}
+
+{% block body_block %}
+
+
+<div class="row container-fluid">
+
+    <!-- Grid column -->
+    <div class="col-md-2">
+        <!-- Exaple 1 -->
+        <div class="card ">
+            <h5 class="m-2 text-center">Category</h5>
+            <div class="list-group">
+
+
+                {% for category in categories %}
+
+                <a href="{% url "searchByCategory" category.slug %}" class="list-group-item list-group-item-action">
+                    {{category.category_name}}</a>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <!-- Exaple 1 -->
+    </div>
+
+    <div class="col-md-10">
+        <div class=" example-1 scrollbar-ripe-malinka">
+            <div id="cartItem">
+
+
+                <div class="row">
+
+                    {% if content %}
+
+                    {% for info in content %}
+                    <div class="col-6">
+
+                        <a href=" {% url 'singleContent' info.slug %}" class="text-decoration-none text-dark">
+                            <iframe width="460px" height="300px" src="https://www.youtube.com/embed/{{info.slug}}"
+                                title="YouTube video player"></iframe>
+
+                            <h3>{{info.video_title}}</h3>
+                            <h6 class="m-0 p-0">Create By: {{info.user.first_name}} {{info.user.last_name}}</h6>
+                            <p class=" p-0">{{info.created_at}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                    {% elif  content_info%}
+                    {% for info in content_info %}
+                    <div class="col-6">
+
+                        <a href=" {% url 'singleContent' info.slug %}" class="text-decoration-none text-dark">
+                            <iframe width="460px" height="300px" src="https://www.youtube.com/embed/{{info.slug}}"
+                                title="YouTube video player"></iframe>
+
+                            <h3>{{info.video_title}}</h3>
+                            <h6 class="m-0 p-0">Create By: {{info.user.first_name}} {{info.user.last_name}}</h6>
+                            <p class=" p-0">{{info.created_at}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    {% elif content_search %}
+                    {% for info in content_search %}
+                    <div class="col-6">
+
+                        <a href=" {% url 'singleContent' info.slug %}" class="text-decoration-none text-dark">
+                            <iframe width="460px" height="300px" src="https://www.youtube.com/embed/{{info.slug}}"
+                                title="YouTube video player"></iframe>
+
+                            <h3>{{info.video_title}}</h3>
+                            <h6 class="m-0 p-0">Create By: {{info.user.first_name}} {{info.user.last_name}}</h6>
+                            <p class=" p-0">{{info.created_at}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h1>No Result</h1>
+                    {% endif %}
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock body_block %}
